@@ -1,12 +1,18 @@
-# Afrovogue Commercial API — Local setup (PostgreSQL)
+# Afro Vogue API Backend
 
-This README shows the minimal steps to run the API locally using PostgreSQL on Windows PowerShell.
+This README provides instructions to set up and run the Afro Vogue Commercial API locally using PostgreSQL.
 
-1) Create a Python virtual environment and install dependencies
+## 1. Create a Python Virtual Environment and Install Dependencies
 
 ```powershell
+# Navigate to your project directory
+# Create a virtual environment
 python -m venv .venv
+
+# Activate the virtual environment
 .venv\Scripts\Activate.ps1
+
+# Install all required packages
 pip install -r requirements.txt
 ```
 
