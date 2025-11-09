@@ -1,0 +1,7 @@
+.venv\Scripts\Activate.ps1
+uvicorn app.main:app --reload
+
+
+pip install -r requirements.txt
+
+
