@@ -61,3 +61,5 @@ uvicorn app.main:app --reload
 Notes
 - `DATABASE_URL` should be in the format: postgresql://user:password@host:port/dbname
 - Keep `JWT_SECRET` secret in production. Use a secure random string.
+
+# afro-vogue-Backend
