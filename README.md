@@ -1,19 +1,22 @@
 # Afro Vogue API Backend
 
-This README provides instructions to set up and run the Afro Vogue Commercial API locally using PostgreSQL.
+This README provides instructions to set up and run the Afro Vogue Commercial API using Docker.
 
-## 1. Create a Python Virtual Environment and Install Dependencies
+## Running with Docker (Recommended)
+
+This method uses Docker and Docker Compose to run the application and the PostgreSQL database in isolated containers.
+
+### Prerequisites
+
+- [Docker](https://docs.docker.com/get-docker/)
+- [Docker Compose](https://docs.docker.com/compose/install/) (usually included with Docker Desktop)
+
+### 1. Configure Environment Variables
+
+Copy the example environment file `.env.example` to a new file named `.env`.
 
 ```powershell
-# Navigate to your project directory
-# Create a virtual environment
-python -m venv .venv
-
-# Activate the virtual environment
-.venv\Scripts\Activate.ps1
-
-# Install all required packages
-pip install -r requirements.txt
+copy .env.example .env
 ```
 
 2) Create a PostgreSQL database
