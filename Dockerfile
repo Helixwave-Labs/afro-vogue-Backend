@@ -1,17 +1,24 @@
 # Use an official Python runtime as a parent image
 FROM python:3.11-slim
 
+# Set environment variables to prevent Python from writing .pyc files
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
 # Set the working directory in the container
 WORKDIR /app
 
-# Copy the requirements file into the container at /app
-COPY ./requirements.txt /app/requirements.txt
+# Copy the requirements file into the container
+COPY ./requirements.txt .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir --upgrade -r /app/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r requirements.txt
 
-# Copy the application code into the container
-COPY ./app /app/app
+# Copy the rest of the application's code into the container
+COPY . .
 
-# Command to run the application
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Make our entrypoint script executable
+RUN chmod +x /app/entrypoint.sh
+
+# Expose the port the app runs on
+EXPOSE 8000

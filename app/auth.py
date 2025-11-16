@@ -43,15 +43,19 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        email: str = payload.get("sub")
-        if email is None:
+        subject = payload.get("sub")
+        if not isinstance(subject, str):
             raise credentials_exception
+        email: str = subject
     except JWTError:
         raise credentials_exception
     
     user = db.query(models.User).filter(models.User.email == email).first()
     if user is None:
         raise credentials_exception
+    if user.is_active is False:
+        raise HTTPException(status_code=400, detail="Inactive user. Please verify your email.")
+
     return user
 
 def require_role(required_role: str):
@@ -64,7 +68,7 @@ def require_role(required_role: str):
                 status_code=status.HTTP_401_UNAUTHORIZED,
                 detail="Not authenticated"
             )
-        if current_user.role != required_role:
+        if current_user.role != required_role: # This is runtime-correct, Pylance can be ignored or code adjusted if needed.
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail=f"Operation not permitted. Requires '{required_role}' role."

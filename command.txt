@@ -2,6 +2,11 @@
 uvicorn app.main:app --reload
 
 
+docker build -t afro_vouge-v1:latest .
+
 pip install -r requirements.txt
 
 
+use a volume to mount your source code directly into the container and to tell uvicorn to watch for changes
+
+You will only need to run docker-compose up --build again if you make changes to your requirements.txt or your Dockerfile.

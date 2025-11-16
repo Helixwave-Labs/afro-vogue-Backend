@@ -1,9 +1,6 @@
-version: '3.8'
-
 services:
   db:
-    image: postgres:15
-    container_name: afrovogue-postgres
+    image: postgres:15-alpine
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
@@ -12,22 +9,34 @@ services:
       - "5432:5432"
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
-      interval: 5s
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
       timeout: 5s
       retries: 5
 
   api:
     build: .
-    container_name: afrovogue-api
+    volumes:
+      - .:/app
     ports:
       - "8000:8000"
     env_file:
       - ./.env
+    entrypoint: ["/app/entrypoint.sh"]
     depends_on:
       db:
         condition: service_healthy
-    volumes:
-      - ./uploads:/app/uploads
+      redis:
+        condition: service_healthy
 
 volumes:
   postgres_data:
