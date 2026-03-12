@@ -6,22 +6,12 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 import os
-import bcrypt
 from dotenv import load_dotenv
 
 from app.database import get_db
 from app import models
 
 load_dotenv()
-
-# Fix for 'passlib' compatibility with 'bcrypt' >= 4.1.0
-# passlib relies on an internal attribute that was removed in newer bcrypt versions.
-try:
-    bcrypt.__about__
-except AttributeError:
-    class About:
-        __version__ = bcrypt.__version__
-    bcrypt.__about__ = About()
 
 # Set up password hashing
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
