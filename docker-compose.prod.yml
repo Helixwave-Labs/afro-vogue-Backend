@@ -37,8 +37,8 @@ services:
     env_file:
       - ./.env
     # Replacing script with direct command to avoid Windows CRLF issues
-    # Simplify: Only run init_db and then the server (skipping alembic to prevent conflicts)
-    entrypoint: ["sh", "-c", "python -m app.init_db && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    # Simplify: Start server immediately to stop crash loop, then we will run init_db manually
+    entrypoint: ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8000"]
     depends_on:
       db:
         condition: service_healthy
