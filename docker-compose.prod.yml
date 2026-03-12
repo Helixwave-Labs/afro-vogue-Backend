@@ -5,30 +5,27 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
       - ./.env
-    ports:
-      - "5432:5432"
+    # Ports removed for security: DB is only accessible within the container network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+    restart: always
 
   redis:
     image: redis:7-alpine
-    ports:
-      - "6379:6379"
+    # Ports removed for security
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
-    restart: unless-stopped
+    restart: always
 
   api:
     build: .
-    volumes:
-      - .:/app
+    # 'volumes' section removed so code is isolated inside the image
     ports:
       - "8000:8000"
     env_file:
@@ -39,7 +36,7 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
-    restart: unless-stopped
+    restart: always
 
 volumes:
   postgres_data:

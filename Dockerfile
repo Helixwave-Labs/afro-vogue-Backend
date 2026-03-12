@@ -22,3 +22,5 @@ RUN chmod +x /app/entrypoint.sh
 
 # Expose the port the app runs on
 EXPOSE 8000
+
+ENTRYPOINT ["/app/entrypoint.sh"]

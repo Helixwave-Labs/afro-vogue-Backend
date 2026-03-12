@@ -10,3 +10,8 @@ pip install -r requirements.txt
 use a volume to mount your source code directly into the container and to tell uvicorn to watch for changes
 
 You will only need to run docker-compose up --build again if you make changes to your requirements.txt or your Dockerfile.
+
+
+
+ssh afro-api
+aws server setup on windoews

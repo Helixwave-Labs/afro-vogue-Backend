@@ -1,0 +1,45 @@
+services:
+  # 1. Your API Service
+  - type: web
+    name: afrovogue-api
+    env: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: 8000
+      - key: POSTGRES_HOST
+        fromDatabase:
+          name: afrovogue-db
+          property: host
+      - key: POSTGRES_DB
+        fromDatabase:
+          name: afrovogue-db
+          property: database
+      - key: POSTGRES_USER
+        fromDatabase:
+          name: afrovogue-db
+          property: user
+      - key: POSTGRES_PASSWORD
+        fromDatabase:
+          name: afrovogue-db
+          property: password
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: afrovogue-redis
+          property: connectionString
+
+  # 2. Managed Redis
+  - type: redis
+    name: afrovogue-redis
+    plan: free # Note: Check Render's current pricing, they often have a free tier for Redis
+    ipAllowList: [] # Access only from internal services
+
+databases:
+  # 3. Managed PostgreSQL
+  - name: afrovogue-db
+    databaseName: afrovogue
+    user: afrovogue
+    plan: free
