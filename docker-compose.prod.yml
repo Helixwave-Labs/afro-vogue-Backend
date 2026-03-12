@@ -37,7 +37,8 @@ services:
     env_file:
       - ./.env
     # Replacing script with direct command to avoid Windows CRLF issues
-    entrypoint: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    # We run init_db first to create tables, then alembic (optional), then the app
+    entrypoint: ["sh", "-c", "python -m app.init_db && alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
     depends_on:
       db:
         condition: service_healthy
