@@ -8,5 +8,8 @@ def init():
 
 if __name__ == "__main__":
     print("Creating database tables if they do not exist...")
-    init()
-    print("Database initialization complete.")
+    try:
+        init()
+        print("Database initialization complete.")
+    except Exception as e:
+        print(f"Error initializing database: {e}")
