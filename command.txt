@@ -14,4 +14,13 @@ You will only need to run docker-compose up --build again if you make changes to
 
 
 ssh afro-api
-aws server setup on windoews
+aws server setup on windows
+
+# Replace with your actual repo URL
+git clone URL
+
+COMPOSE_DOCKER_CLI_BUILD=0 DOCKER_BUILDKIT=0 docker-compose -f docker-compose.prod.yml up -d --build
+docker-compose -f docker-compose.prod.yml ps
+docker-compose -f docker-compose.prod.yml up -d
+
+
