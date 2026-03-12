@@ -35,7 +35,7 @@ services:
     env_file:
       - ./.env
     # Replacing script with direct command to avoid Windows CRLF issues
-    entrypoint: ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port 8000"]
+    entrypoint: ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port 8000"]
     depends_on:
       db:
         condition: service_healthy

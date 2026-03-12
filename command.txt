@@ -15,6 +15,10 @@ You will only need to run docker-compose up --build again if you make changes to
 
 ssh afro-api
 aws server setup on windows
+cd afro-vogue-Backend
+git pull
+
+
 
 # Replace with your actual repo URL
 git clone URL
